@@ -1,0 +1,87 @@
+#include <SDL2/SDL.h>
+
+// Define as dimensões da tela
+const int WIDTH = 800;
+const int HEIGHT = 600;
+
+// Define as cores
+const SDL_Color WHITE = { 255, 255, 255 };
+const SDL_Color BLACK = { 0, 0, 0 };
+
+// Define um objeto para representar o motor
+SDL_Surface* motor = SDL_LoadBMP("motor.bmp");
+
+// Cria uma lista para armazenar as peças do motor
+SDL_Surface** peças = new SDL_Surface*[11];
+
+// Carrega as peças do motor
+peças[0] = SDL_LoadBMP("bloco.bmp");
+peças[1] = SDL_LoadBMP("cabeçote.bmp");
+peças[2] = SDL_LoadBMP("pistão.bmp");
+peças[3] = SDL_LoadBMP("virabrequim.bmp");
+peças[4] = SDL_LoadBMP("biela.bmp");
+peças[5] = SDL_LoadBMP("anéis de pistão.bmp");
+peças[6] = SDL_LoadBMP("válvula.bmp");
+peças[7] = SDL_LoadBMP("mola de válvula.bmp");
+peças[8] = SDL_LoadBMP("tampa de válvula.bmp");
+peças[9] = SDL_LoadBMP("carter de óleo.bmp");
+
+// Define a posição inicial das peças
+SDL_Point posições[11];
+posições[0] = { 0, 0 };
+posições[1] = { 0, 0 };
+posições[2] = { 0, 0 };
+posições[3] = { 0, 0 };
+posições[4] = { 0, 0 };
+posições[5] = { 0, 0 };
+posições[6] = { 0, 0 };
+posições[7] = { 0, 0 };
+posições[8] = { 0, 0 };
+posições[9] = { 0, 0 };
+posições[10] = { 0, 0 };
+
+// Define a velocidade das peças
+SDL_Point velocidades[11];
+velocidades[0] = { 0, 0 };
+velocidades[1] = { 0, 0 };
+velocidades[2] = { 0, 0 };
+velocidades[3] = { 0, 0 };
+velocidades[4] = { 0, 0 };
+velocidades[5] = { 0, 0 };
+velocidades[6] = { 0, 0 };
+velocidades[7] = { 0, 0 };
+velocidades[8] = { 0, 0 };
+velocidades[9] = { 0, 0 };
+velocidades[10] = { 0, 0 };
+
+// Define um contador para controlar o passo
+int contador = 0;
+
+// Inicia o loop principal
+int main(void) {
+
+    // Inicia o SDL
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("Erro ao iniciar o SDL: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    // Cria uma janela
+    SDL_Window* janela = SDL_CreateWindow("Montagem de um motor V8", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+    if (janela == NULL) {
+        printf("Erro ao criar a janela: %s\n", SDL_GetError());
+        SDL_Quit();
+        return 1;
+    }
+
+    // Cria um renderer
+    SDL_Renderer* renderizador = SDL_CreateRenderer(janela, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (renderizador == NULL) {
+        printf("Erro ao criar o renderer: %s\n", SDL_GetError());
+        SDL_DestroyWindow(janela);
+        SDL_Quit();
+        return 1;
+    }
+
+    // Define o fundo preto
+    SDL_SetRenderDrawColor(renderizador, BLACK.r, BLACK.g, BLACK.b, BLACK.a);
